@@ -1,11 +1,14 @@
+import os
+
 from telegram import ReplyKeyboardMarkup, ParseMode, ReplyKeyboardRemove
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater, ConversationHandler
 
+MAIN_DIR = os.getcwd()
+FILES_DIR = os.path.join(MAIN_DIR, 'files')
+FIRST_LESSON_DIR = os.path.join(MAIN_DIR, 'first_lesson')
+
 if __name__ == '__main__':
     updater = Updater(token='5938512415:AAGWUclAPiZUKJ8dA-sQI1hfR9PVr8F1J2Q')
-
-    # VIDEO_INTRO, PROLOGUE_AUDIO, PROLOGUE_IMAGE, PROLOGUE_TEXT, FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH, FIFTEENTH, SIXTEENTH, SEVENTEENTH, EIGHTEENTH, NINETEENTH, TWENTIETH = range(
-    #     24)
 
     remarks_sequence = {
         'VIDEO_INTRO': 0,
@@ -46,7 +49,7 @@ if __name__ == '__main__':
         buttons = ReplyKeyboardMarkup([['Здорово! Что дальше?  \U0001F3A7 '], ])
         context.bot.send_video_note(
             chat_id=chat.id,
-            video_note=open(r'D:\Dev\polyanskaya_bot\files\first_lesson\видео_введение_new.mp4', 'rb'),
+            video_note=open(os.path.join(FIRST_LESSON_DIR, 'видео_введение_new.mp4'), 'rb'),
             reply_markup=buttons,
         )
         return remarks_sequence.get('PROLOGUE_AUDIO')
@@ -57,7 +60,7 @@ if __name__ == '__main__':
         buttons = ReplyKeyboardMarkup([['Отправиться в Лесные дали Мнемоземья навстречу испытаниям'], ])
         context.bot.send_voice(
             chat_id=chat.id,
-            voice=open(r'D:\Dev\polyanskaya_bot\files\first_lesson\аудио_введение_new.mp3', 'rb'),
+            voice=open(os.path.join(FIRST_LESSON_DIR, 'аудио_введение_new.mp3'), 'rb'),
             reply_markup=buttons,
         )
         return remarks_sequence.get('PROLOGUE_IMAGE')
@@ -68,7 +71,7 @@ if __name__ == '__main__':
         buttons = ReplyKeyboardMarkup([['Вот ты и на месте!'], ])
         context.bot.send_photo(
             chat_id=chat.id,
-            photo=open(r'D:\Dev\polyanskaya_bot\files\first_lesson\лесные дали мнемоземья карточка.png', 'rb'),
+            photo=open(os.path.join(FIRST_LESSON_DIR, 'лесные дали мнемоземья карточка.png'), 'rb'),
             reply_markup=buttons,
         )
         return remarks_sequence.get('PROLOGUE_TEXT')
@@ -80,7 +83,7 @@ if __name__ == '__main__':
         context.bot.send_photo(
             chat_id=chat.id,
             reply_markup=buttons,
-            photo=open(r'D:\Dev\polyanskaya_bot\files\first_lesson\Селестина Мемория карточка.png', 'rb'),
+            photo=open(os.path.join(FIRST_LESSON_DIR, 'Селестина Мемория карточка.png'), 'rb'),
             caption='Добро пожаловать в Лесные дали Мнемоземья, храбрый путник!',
             parse_mode=ParseMode.HTML,
         )
@@ -288,7 +291,7 @@ if __name__ == '__main__':
         context.bot.send_photo(
             chat_id=chat.id,
             reply_markup=buttons,
-            photo=open(r'D:\Dev\polyanskaya_bot\files\first_lesson\артефакт карта сокровищ карточка.png', 'rb'),
+            photo=open(os.path.join(FIRST_LESSON_DIR, 'артефакт карта сокровищ карточка.png'), 'rb'),
             caption=f'<b>Селестина Мемория \U0001F9DA :</b>'
                     '\nПоздравляю, ты достойно справился с первым испытанием! '
                     '\nЭта карта сокровищ \U0001F5FA — твой первый артефакт. '
@@ -304,9 +307,7 @@ if __name__ == '__main__':
         context.bot.send_photo(
             chat_id=chat.id,
             reply_markup=buttons,
-            photo=open(r'D:\Dev\polyanskaya_bot\files\first_lesson\пушистик карточка.png',
-                       'rb')
-
+            photo=open(os.path.join(FIRST_LESSON_DIR, 'пушистик карточка.png'), 'rb'),
         )
         return remarks_sequence.get('14_REMARK')
 
@@ -389,7 +390,7 @@ if __name__ == '__main__':
         context.bot.send_video_note(
             chat_id=chat.id,
             reply_markup=buttons,
-            video_note=open(r'D:\Dev\polyanskaya_bot\files\first_lesson\прогресс_с_ фанфарами_new.mp4', 'rb'),
+            video_note=open(os.path.join(FIRST_LESSON_DIR, 'прогресс_с_ фанфарами_new.mp4'), 'rb'),
         )
         return remarks_sequence.get('20_REMARK')
 
@@ -411,7 +412,7 @@ if __name__ == '__main__':
         context.bot.send_photo(
             chat_id=chat.id,
             reply_markup=buttons,
-            photo=open(r'D:\Dev\polyanskaya_bot\files\first_lesson\mnemotechnics_first_letter.png', 'rb'),
+            photo=open(os.path.join(FIRST_LESSON_DIR, 'mnemotechnics_first_letter.png'), 'rb'),
         )
         return remarks_sequence.get('22_REMARK')
 
@@ -478,9 +479,6 @@ if __name__ == '__main__':
         allow_reentry=True,
     )
 
-    # Регистрируется обработчик CommandHandler;
-    # он будет отфильтровывать только сообщения с содержимым '/start'
-    # и передавать их в функцию wake_up()
     updater.dispatcher.add_handler(converstation_handler)
     updater.start_polling()
     updater.idle()
