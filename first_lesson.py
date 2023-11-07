@@ -5,7 +5,7 @@ from telegram.ext import CommandHandler, Filters, MessageHandler, Updater, Conve
 
 MAIN_DIR = os.getcwd()
 FILES_DIR = os.path.join(MAIN_DIR, 'files')
-FIRST_LESSON_DIR = os.path.join(MAIN_DIR, 'first_lesson')
+FIRST_LESSON_DIR = os.path.join(FILES_DIR, 'first_lesson')
 
 if __name__ == '__main__':
     updater = Updater(token='5938512415:AAGWUclAPiZUKJ8dA-sQI1hfR9PVr8F1J2Q')
